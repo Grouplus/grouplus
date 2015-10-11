@@ -5,6 +5,11 @@
 'use strict';
 
 var React = require('react-native');
+//var CalendarManager = require('react-native').NativeModules.CalendarManager;
+var {
+  CalendarManager
+} = require('NativeModules');
+
 var {
   AppRegistry,
   StyleSheet,
@@ -17,7 +22,7 @@ var Grouplus = React.createClass({
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+        Grouplus!!!
         </Text>
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
@@ -28,8 +33,11 @@ var Grouplus = React.createClass({
         </Text>
       </View>
     );
-  }
+  },
 });
+
+CalendarManager.addEvent('Birthday Party', '4 Privet Drive, Surrey');
+
 
 var styles = StyleSheet.create({
   container: {
