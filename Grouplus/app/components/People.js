@@ -9,6 +9,7 @@ var {
   View,
   Image,
   StyleSheet,
+  Text,
 } = React;
 
 var styles = StyleSheet.create({
@@ -17,9 +18,9 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   avatar: {
-    height: 15,
-    width: 15,
-    borderRadius: 65,
+    height: 20,
+    width: 20,
+    borderRadius: 10,
   },
   first: {
     fontSize: 10,
@@ -35,7 +36,7 @@ class People extends React.Component{
         <Image style={styles.avatar} source={{uri: people[index].avatar_url}} />
       );
     });
-    var content = (list.length === 0) ? <Text styles={styles.first}>Be the first!</Text> : list;
+    var content = (list.length === 0) ? <Text style={styles.first}>Be the first!</Text> : list;
 
     return (
       <View style={styles.container}>

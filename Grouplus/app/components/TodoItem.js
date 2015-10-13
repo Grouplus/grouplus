@@ -15,18 +15,26 @@ var {
 
 var styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: 'row',
+    height: 70,
+    margin: 3,
+    justifyContent: 'space-between',
   },
   title: {
-    fontSize: 18,
+    fontSize: 22,
+    flex: 7,
+    textAlign: 'left',
+  },
+  info: {
+    flex: 2,
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
   },
   dueDate: {
     fontSize: 14,
     color: 'red',
-  },
-  info: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
 });
 

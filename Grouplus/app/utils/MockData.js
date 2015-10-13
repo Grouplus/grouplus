@@ -14,7 +14,7 @@ var mockdata = {
         },
         {
           name: 'Stephanie',
-          avatar_url: 'https://avatars.githubusercontent.com/u/4206077?v=3'
+          avatar_url: 'https://avatars.githubusercontent.com/u/3505678?v=3'
         },
         {
           name: 'Emma',
@@ -34,7 +34,7 @@ var mockdata = {
           [
             {
               name: 'Stephanie',
-              avatar_url: 'https://avatars.githubusercontent.com/u/4206077?v=3'
+              avatar_url: 'https://avatars.githubusercontent.com/u/3505678?v=3'
             },
             {
               name: 'Emma',
@@ -49,7 +49,7 @@ var mockdata = {
           [
             {
               name: 'Stephanie',
-              avatar_url: 'https://avatars.githubusercontent.com/u/4206077?v=3'
+              avatar_url: 'https://avatars.githubusercontent.com/u/3505678?v=3'
             },
           ],
         },
@@ -78,7 +78,7 @@ var mockdata = {
           [
             {
               name: 'Stephanie',
-              avatar_url: 'https://avatars.githubusercontent.com/u/4206077?v=3'
+              avatar_url: 'https://avatars.githubusercontent.com/u/3505678?v=3'
             },
           ],
         },
@@ -100,7 +100,7 @@ var mockdata = {
           [
             {
               name: 'Brenda',
-              avatar_url: 'https://avatars.githubusercontent.com/u/6786994?v=3'
+              avatar_url: 'https://avatars.githubusercontent.com/u/4206077?v=3'
             },
           ],
         },
@@ -117,7 +117,7 @@ var mockdata = {
         },
         {
           name: 'Stephanie',
-          avatar_url: 'https://avatars.githubusercontent.com/u/4206077?v=3'
+          avatar_url: 'https://avatars.githubusercontent.com/u/3505678?v=3'
         },
         {
           name: 'Emma',
@@ -137,7 +137,7 @@ var mockdata = {
             },
             {
               name: 'Stephanie',
-              avatar_url: 'https://avatars.githubusercontent.com/u/4206077?v=3'
+              avatar_url: 'https://avatars.githubusercontent.com/u/3505678?v=3'
             },
             {
               name: 'Emma',

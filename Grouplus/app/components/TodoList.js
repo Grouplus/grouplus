@@ -9,6 +9,7 @@ var Separator = require('./helpers/Separator');
 var TodoItem = require('./TodoItem');
 
 var {
+  View,
   ListView,
   StyleSheet,
 } = React;
@@ -36,7 +37,7 @@ class TodoList extends React.Component{
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={this._renderRow} 
+        renderRow={this._renderRow.bind(this)} 
       />
     );
   }

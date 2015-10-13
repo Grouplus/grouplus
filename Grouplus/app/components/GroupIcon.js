@@ -29,7 +29,7 @@ class GroupIcon extends React.Component{
     var list = members.map((item, index) => {
       return (
         <Image style={styles.avatar} source={{uri: members[index].avatar_url}} />
-      );
+      ); 
     });
     return (
       <View style={styles.container}>

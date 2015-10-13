@@ -7,6 +7,6 @@
   },
   "dependencies": {
     "moment": "^2.10.6",
-    "react-native": "^0.11.4"
+    "react-native": "^0.12.0"
   }
 }
