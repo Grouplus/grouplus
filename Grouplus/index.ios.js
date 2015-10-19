@@ -3,6 +3,28 @@
 
 var React = require('react-native');
 var LoginScreen = require('./app/components/LoginScreen');
+
+
+//parse database
+var Parse = require('parse/react-native');
+Parse.initialize("***REMOVED***", "***REMOVED***");
+
+var item = Parse.Object.extend("Listing");
+var query = new Parse.Query(item);
+var imageList = [];
+query.find({
+  success: function(results) {
+    for (var i = 0; i < results.length; ++i) {
+       var object = results[i];
+       var imageFile = object.get('img_url');
+       //var imageURL = imageFile.url();
+       imageList.push(imageFile.url());
+    }
+           console.log(imageList);
+  }
+});
+
+
 // Make react global
 window.React = React;
 
