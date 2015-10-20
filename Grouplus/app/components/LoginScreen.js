@@ -1,9 +1,9 @@
 var React = require('react-native');
 var FBSDKCore = require('react-native-fbsdkcore');
-var Firebase = require('firebase');
 
 var {
   FBSDKAccessToken,
+  FBSDKGraphRequest,
 } = FBSDKCore;
 
 var {
@@ -23,7 +23,8 @@ var {
   FBSDKLoginButton,
 } = FBSDKLogin;
 
-var myFirebaseRef = new Firebase("https://glouplustest.firebaseio.com/");
+var Parse = require('parse/react-native');
+Parse.initialize("***REMOVED***", "***REMOVED***");
 
 var styles = StyleSheet.create({
   loginImage: {
@@ -69,17 +70,14 @@ class LoginScreen extends React.Component{
     alert('Error making request.');
   } else {
     console.log(result);
-                        myFirebaseRef.set({
-                    name: result.name,
-                  }
-                    );
+                  
   }
 }, '/me');
                 })
                 this.props.navigator.push({
                   title: 'MyAccount',
                   //component: GroupList,
-                  component: MyAccount,
+                  component: GroupList,
                 });
               }
             }
