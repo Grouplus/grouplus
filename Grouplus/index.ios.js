@@ -5,8 +5,10 @@ var React = require('react-native');
 var FBSDKCore = require('react-native-fbsdkcore');
 var LoginScreen = require('./app/components/LoginScreen');
 var GroupList = require('./app/components/GroupList');
+
 var Parse = require('parse/react-native');
 var ParseReact = require('parse-react/react-native');
+
 
 Parse.initialize("***REMOVED***", "***REMOVED***");
 
