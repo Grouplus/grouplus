@@ -7,9 +7,6 @@ var Form = t.form.Form;
 var Parse = require('parse/react-native');
 var ParseReact = require('parse-react/react-native');
 
-// initializing Parse
-//Parse.initialize("***REMOVED***", "***REMOVED***");
-
 var Group = t.struct({txt: t.Str});
 
 var {
@@ -68,9 +65,11 @@ class GroupAdd extends React.Component {
         if (value) {
           var creator = ParseReact.Mutation.Create('Group', {
             Name: value.txt,
-            createdBy: Parse.User.current().id
+            createdBy: Parse.User.current().id,
+            members: [Parse.User.current().id]
         });
             creator.dispatch();
+            this.props.navigator.pop();
         }
     }
 
