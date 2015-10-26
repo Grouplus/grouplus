@@ -7,9 +7,6 @@ var Form = t.form.Form;
 var Parse = require('parse/react-native');
 var ParseReact = require('parse-react/react-native');
 
-// initializing Parse
-//Parse.initialize("***REMOVED***", "***REMOVED***");
-
 var Group = t.struct({txt: t.Str});
 
 var {
