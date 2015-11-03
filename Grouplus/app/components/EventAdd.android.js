@@ -96,8 +96,7 @@ handleClickstartTime() {
 handleClickendTime() {
        var that=this;
       NativeModules.DateAndroid.showTimepicker(function() {}, function(date) {
-        var month=date.getMonth();
-        that.setState({endtime: month})
+        that.setState({endtime: date.getDate()})
       });
     }
 
@@ -112,7 +111,7 @@ onUpdate() {
         enddate: that.state.enddate
     });
         creator.dispatch();
-        this.props.modal.close();
+        this.props.navigator.pop();
   }
 
   render(){
@@ -187,7 +186,7 @@ onUpdate() {
                     <Text style={styles.buttonText}>Save</Text>
                 </TouchableHighlight>
                 <Text>
-                {this.state.enddate.getDate()}
+                {this.state.enddate}
                 </Text>
             </ScrollView>
     )
