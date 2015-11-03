@@ -21,9 +21,16 @@ var {
 
 
 
-var styles = StyleSheet.create({  
+var styles = StyleSheet.create({ 
+    container: {
+      flex: 20,
+      flexDirection: 'row',
+      height: 70,
+      margin: 3,
+      justifyContent: 'space-between',
+    },
     instructions: {
-      textAlign: 'center',
+      textAlign: 'left',
       color: '#333333',
       margin: 5,
     },
@@ -65,10 +72,32 @@ class EventCreation extends React.Component{
         };
     }
 
-handleClickDate() {
+handleClickstartDate() {
        var that=this;
       NativeModules.DateAndroid.showDatepicker(function() {}, function(date) {
         that.setState({startdate: date})
+      });
+    }
+
+handleClickendDate() {
+       var that=this;
+      NativeModules.DateAndroid.showDatepicker(function() {}, function(date) {
+        that.setState({enddate: date})
+      });
+    }
+
+handleClickstartTime() {
+       var that=this;
+      NativeModules.DateAndroid.showTimepicker(function() {}, function(date) {
+        that.setState({starttime: date})
+      });
+    }
+
+handleClickendTime() {
+       var that=this;
+      NativeModules.DateAndroid.showTimepicker(function() {}, function(date) {
+        var month=date.getMonth();
+        that.setState({endtime: month})
       });
     }
 
@@ -108,29 +137,58 @@ onUpdate() {
                 <Text style={styles.events}>
                     Start Time
                 </Text>
-                <TouchableOpacity onPress={this.handleClickDate.bind(this)}>
+                <View style={styles.container}>
+                <TouchableOpacity onPress={this.handleClickstartDate.bind(this)}>
                  <Text style={styles.instructions}>
                    Select Start Date
                  </Text>
+                 </TouchableOpacity>
                  <Text style={styles.events}>
                     {this.state.startdate}
                 </Text>
-               </TouchableOpacity> 
+                </View>
+                <View style={styles.container}>
+                <TouchableOpacity onPress={this.handleClickstartTime.bind(this)}>
+                 <Text style={styles.instructions}>
+                   Select Start Time
+                 </Text>
+                 </TouchableOpacity>
+                 <Text style={styles.events}>
+                    {this.state.starttime}
+                </Text>
+                </View>
                 <Text style={styles.events}>
                     End Time
                  </Text>
-                <TextInput
-                 style={styles.TextInput}
-                 onChangeText={(text) => this.setState({enddate: text})}
-                 value={this.state.enddate}
-                />         
-                    
+                 <View style={styles.container}>
+                <TouchableOpacity onPress={this.handleClickendDate.bind(this)}>
+                 <Text style={styles.instructions}>
+                   Select End Date
+                 </Text>
+                 </TouchableOpacity>
+                 <Text style={styles.events}>
+                    {this.state.enddate}
+                </Text>
+                </View>
+                <View style={styles.container}>
+                <TouchableOpacity onPress={this.handleClickendTime.bind(this)}>
+                 <Text style={styles.instructions}>
+                   Select End Time
+                 </Text>
+                 </TouchableOpacity>
+                 <Text style={styles.events}>
+                    {this.state.endtime}
+                </Text>
+                </View>
                 <TouchableHighlight
                     style={[styles.button, styles.saveButton]}
                     onPress={this.onUpdate.bind(this)}
                     underlayColor='#99d9f4'>
                     <Text style={styles.buttonText}>Save</Text>
                 </TouchableHighlight>
+                <Text>
+                {this.state.enddate.getDate()}
+                </Text>
             </ScrollView>
     )
   }
