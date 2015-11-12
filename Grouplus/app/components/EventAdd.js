@@ -81,6 +81,9 @@ class EventCreation extends React.Component{
 
   save() {
     var value = this.refs.form.getValue();
+    console.log(value.eventstartdate);
+
+    console.log(value.eventstartdate);
     if (value){
       var creator = ParseReact.Mutation.Create('Event', {
           name: value.name,
