@@ -7,7 +7,6 @@ var ParseComponent = ParseReact.Component(React);
 var Parse = require('parse/react-native');
 Parse.initialize("***REMOVED***", "***REMOVED***");
 
-var Modal = require('react-native-modalbox');
 var EventItem = require('./EventItem');
 var Swipeout = require('./helpers/Swipeout');
 var Separator = require('./helpers/Separator');
