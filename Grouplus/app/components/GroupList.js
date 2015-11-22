@@ -13,6 +13,7 @@ var {
   TouchableHighlight,
   TouchableOpacity,
   Navigator,
+  PushNotificationIOS,
   Platform,
 } = React;
 
@@ -64,7 +65,37 @@ class GroupList extends ParseComponent{
       groups: new Parse.Query('Group').equalTo('members', this.props.user.id),
     }
   }
-  
+  componentWillMount() {
+    super.componentWillMount();
+    if (Platform.OS === 'android') { 
+      return; 
+    }
+    PushNotificationIOS.requestPermissions();
+    var registerInstallation = function(data) {
+      var url = "https://api.parse.com";
+      url += "/1/installations";
+      fetch(url, {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'X-Parse-Application-Id': '***REMOVED***',
+          'X-Parse-REST-API-Key': '***REMOVED***',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+    };
+    var that = this;
+    PushNotificationIOS.addEventListener('register', function(token){
+      registerInstallation({
+        "deviceType": "ios",
+        "deviceToken": token,
+        "channels": ["global"],
+        'user': that.props.user.id,
+      })
+    });
+  }
+
   onPressRow(group) {
     if (this.props.onPressGroup) {
       this.props.onPressGroup(group);
