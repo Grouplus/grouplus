@@ -8,6 +8,7 @@
  var Parse = require('parse/react-native');
  Parse.initialize("***REMOVED***", "***REMOVED***");
  var mockdata = require('../utils/MockData.js');
+var Documents = React.NativeModules.ICloudDocuments;
 
  var {
   TouchableHighlight,
@@ -90,58 +91,70 @@ class Photos extends ParseComponent{
     });
   }
   
-  imageOptions() {
-    if (Platform.OS === 'android') {
-      Utils.alertToast('Stay Tuned; Android support is coming! :)');
-      return;
-    }
-    var that = this;
-    UIImagePickerManager.showImagePicker(options, (didCancel, response) => {
-
-      if (didCancel) {
-        //console.log('User cancelled image picker');
-      } else if (response.customButton) {
-        //console.log('User tapped custom button: ', response.customButton);
-      }
-      else {
-        // You can display the image using either:
-        const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
-        //const source = {uri: response.uri.replace('file://', ''), isStatic: true};
-        var file = new Parse.File('mockphoto7.jpg', {base64: response.data}, 'image/jpeg');
-
-        var creator = ParseReact.Mutation.Create('GroupPhotos', {
-          groupId: this.props.group.objectId,
-          uploadedBy: Parse.User.current().id,
-          description: "test picture upload",
-        });
-
-        creator.dispatch().then(function(object){
-          var photoItem = Parse.Object.extend("GroupPhotos");
-          var query = new Parse.Query(photoItem);
-          query.get(object.objectId, {
-            success:function(photoItem){
-              photoItem.set('imgFile',file);
-
-              photoItem.save(null, {
-               success: function(item) {
-                 that.refreshQueries();
-               },
-               error: function(item, error) {
-                  // Execute any logic that should take place if the save fails.
-              // error is a Parse.Error with an error code and message.
-              alert('Pictures failed');     
-            }
-          })
-            }
-          });          
-        });
-
-        this.setState({
-          avatarSource: source
-        });
-      }
+  imageOptions(){
+    Documents.getICloudToken((err, token)=>{
+      console.log("TOKEN: " + token);
+    });
+    Documents.iCloudDocumentPath((err, path)=>{
+      console.log("ICLOUD PATH: " + path);
+    });
+    Documents.documentPath((err, path)=>{
+      console.log("DOCUMENT PATH: " + path);
     });
   }
+  
+  // imageOptions() {
+  //   if (Platform.OS === 'android') {
+  //     Utils.alertToast('Stay Tuned; Android support is coming! :)');
+  //     return;
+  //   }
+  //   var that = this;
+  //   UIImagePickerManager.showImagePicker(options, (didCancel, response) => {
+
+  //     if (didCancel) {
+  //       //console.log('User cancelled image picker');
+  //     } else if (response.customButton) {
+  //       //console.log('User tapped custom button: ', response.customButton);
+  //     }
+  //     else {
+  //       // You can display the image using either:
+  //       const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
+  //       //const source = {uri: response.uri.replace('file://', ''), isStatic: true};
+  //       var file = new Parse.File('mockphoto7.jpg', {base64: response.data}, 'image/jpeg');
+
+  //       var creator = ParseReact.Mutation.Create('GroupPhotos', {
+  //         groupId: this.props.group.objectId,
+  //         uploadedBy: Parse.User.current().id,
+  //         description: "test picture upload",
+  //       });
+
+  //       creator.dispatch().then(function(object){
+  //         var photoItem = Parse.Object.extend("GroupPhotos");
+  //         var query = new Parse.Query(photoItem);
+  //         query.get(object.objectId, {
+  //           success:function(photoItem){
+  //             photoItem.set('imgFile',file);
+
+  //             photoItem.save(null, {
+  //              success: function(item) {
+  //                that.refreshQueries();
+  //              },
+  //              error: function(item, error) {
+  //                 // Execute any logic that should take place if the save fails.
+  //             // error is a Parse.Error with an error code and message.
+  //             alert('Pictures failed');     
+  //           }
+  //         })
+  //           }
+  //         });          
+  //       });
+
+  //       this.setState({
+  //         avatarSource: source
+  //       });
+  //     }
+  //   });
+  // }
   //<Image source={this.state.avatarSource} style={styles.uploadAvatar} />
   OnPressChooseDelete(){
     this.setState({isEditing: !this.state.isEditing });
@@ -209,6 +222,7 @@ else{
         );
 }
 }
+
 
   render(){
     return (
