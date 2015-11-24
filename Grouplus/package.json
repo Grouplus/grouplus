@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node_modules/react-native/packager/packager.sh"
+    "start": "node_modules/react-native/packager/packager.sh",
+    "test" : "jest"
   },
   "dependencies": {
     "moment": "^2.10.6",
@@ -21,5 +22,23 @@
     "react-native-image-picker": "^0.8.0",
     "react-tween-state": "^0.1.3",
     "tcomb-form-native": "^0.2.8"
+  },
+  "devDependencies": {
+    "jest-cli": "^0.8.0"
+  },
+  "jest": {
+    "scriptPreprocessor": "node_modules/react-native/jestSupport/preprocessor.js",
+    "setupEnvScriptFile": "node_modules/react-native/jestSupport/env.js",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "packager/react-packager/src/Activity/"
+    ],
+    "testFileExtensions": [
+      "js"
+    ],
+    "unmockedModulePathPatterns": [
+      "promise",
+      "source-map"
+    ]
   }
 }
