@@ -24,6 +24,8 @@
 		5724C1F51BDAA18000A9DAFA /* UIImagePickerManager in Resources */ = {isa = PBXBuildFile; fileRef = 5724C1F41BDAA18000A9DAFA /* UIImagePickerManager */; };
 		5724C1F81BDAA23D00A9DAFA /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5724C1F71BDAA23D00A9DAFA /* UIImagePickerManager.m */; };
 		573D8AAF1BEF226C00290F2B /* libActivityView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 573D8AA01BEF226200290F2B /* libActivityView.a */; };
+		577962CB1C0630ED00E18E87 /* CalendarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C822DEC71BCAE1DB006B92EE /* CalendarManager.m */; };
+		577962CC1C0630ED00E18E87 /* MyCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = C818326D1BCF34D200260786 /* MyCalendar.m */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		902EC3951BCA4F8800B38D60 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 902EC3931BCA4F8800B38D60 /* FBSDKCoreKit.framework */; };
 		902EC3961BCA4F8800B38D60 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 902EC3941BCA4F8800B38D60 /* FBSDKLoginKit.framework */; };
@@ -34,8 +36,6 @@
 		902EC3B51BCA50DF00B38D60 /* libRCTFBSDKCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 902EC3A61BCA50B400B38D60 /* libRCTFBSDKCore.a */; };
 		908803381BD4945E0020B7E5 /* libReactNativeIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 908803371BD494470020B7E5 /* libReactNativeIcons.a */; };
 		9088033A1BD494EE0020B7E5 /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 908803391BD494EE0020B7E5 /* ionicons.ttf */; };
-		C818326E1BCF34D200260786 /* MyCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = C818326D1BCF34D200260786 /* MyCalendar.m */; };
-		C822DEC81BCAE1DB006B92EE /* CalendarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C822DEC71BCAE1DB006B92EE /* CalendarManager.m */; };
 		ED13E8EB1BDF322C00E555A3 /* FAKMaterial.h in Resources */ = {isa = PBXBuildFile; fileRef = ED13E8E81BDF322C00E555A3 /* FAKMaterial.h */; };
 		ED13E8EC1BDF322C00E555A3 /* FAKMaterial.m in Resources */ = {isa = PBXBuildFile; fileRef = ED13E8E91BDF322C00E555A3 /* FAKMaterial.m */; };
 		ED13E8ED1BDF322C00E555A3 /* Material-Design-Iconic-Font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED13E8EA1BDF322C00E555A3 /* Material-Design-Iconic-Font.ttf */; };
@@ -783,11 +783,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				577962CB1C0630ED00E18E87 /* CalendarManager.m in Sources */,
+				577962CC1C0630ED00E18E87 /* MyCalendar.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				5724C1F81BDAA23D00A9DAFA /* UIImagePickerManager.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				C822DEC81BCAE1DB006B92EE /* CalendarManager.m in Sources */,
-				C818326E1BCF34D200260786 /* MyCalendar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

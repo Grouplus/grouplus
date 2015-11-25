@@ -78,6 +78,7 @@ class Events extends ParseComponent{
       text: 'Export', 
       backgroundColor: '#FFA500',
       onPress: function(){
+         alert(rowData.enddate.getTime().toString()); 
        if (Platform.OS === 'ios') {
         CalendarManager.addEvent(rowData.name, rowData.location, rowData.dueDate, rowData.enddate, 
           (response) =>{

@@ -242,7 +242,7 @@ class Settings extends ParseComponent{
             <Switch
               onValueChange={(value) => {this.setState({exportEvent: value})}}
               style={styles.rowInput}
-              value={true} />
+              value={false} />
           </View>
           <Text style={styles.categoryLabel}>Members</Text>
         </View>
