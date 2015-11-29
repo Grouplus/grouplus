@@ -26,6 +26,9 @@
 var AddButton = require('./helpers/AddButton');
 var NavBar = require('./helpers/NavBar');
 var Utils = require('./helpers/Utils'); 
+var {
+  CameraModule
+} = require('NativeModules');
 
 var options = {
   title: 'Upload Photo', // specify null or empty string to remove the title
@@ -91,10 +94,6 @@ class Photos extends ParseComponent{
   }
   
   imageOptions() {
-    if (Platform.OS === 'android') {
-      Utils.alertToast('Stay Tuned; Android support is coming! :)');
-      return;
-    }
     var that = this;
     UIImagePickerManager.showImagePicker(options, (didCancel, response) => {
 
@@ -210,6 +209,7 @@ else{
 }
 }
 
+
   render(){
     return (
       <View style={basicStyles.flex1}>
@@ -217,7 +217,7 @@ else{
       <ListView contentContainerStyle={styles.list}
       dataSource={this.ds.cloneWithRows(this.data.imageList)}
       renderRow={this.renderRow.bind(this)}  />
-      <AddButton onPress={this.imageOptions.bind(this)}/>
+      <AddButton onPress={Platform.OS ==="ios"? this.imageOptions.bind(this) : () => CameraModule.dispatchTakePictureIntent()}/>
       </View>
       );
   }
