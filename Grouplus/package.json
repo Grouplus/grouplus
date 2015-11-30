@@ -23,11 +23,17 @@
     "tcomb-form-native": "^0.2.8"
   },
   "devDependencies": {
-    "jest-cli": "^0.8.0"
+    "babel-core": "5.4.7",
+    "jest-cli": "^0.4.5",
+    "react": "0.14.3"
   }, 
   "scripts": {
    "test": "jest"
  }, 
+ "jshintConfig": {
+    "esnext": true,
+    "node": true
+  },
  "jest": {
   "scriptPreprocessor": "<rootDir>/node_modules/react-native/jestSupport/preprocessor.js",
   "setupEnvScriptFile": "<rootDir>/node_modules/react-native/jestSupport/env.js",
@@ -38,6 +44,6 @@
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/react-addons-test-utils",
       "<rootDir>/node_modules/fbjs"
-  ]
-}
+    ]
+  }
 }
