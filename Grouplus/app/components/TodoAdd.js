@@ -67,7 +67,7 @@ class TodoAdd extends React.Component {
           className: 'Todo',
           objectId: that.props.todo.objectId,
         };  
-        var isDone = false;
+        var isDone = that.props.todo.done;
         if(value.individual === true) {
           if(this.props.todo.whoAreDone.includes(Parse.User.current().id)) {
             var isDone = true;
