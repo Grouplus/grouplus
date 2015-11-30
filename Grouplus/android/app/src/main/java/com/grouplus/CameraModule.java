@@ -3,13 +3,16 @@ package com.grouplus;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.net.Uri;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -76,7 +79,7 @@ public class CameraModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void dispatchTakePictureIntent() {
+    public File dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(reactContext.getPackageManager()) != null) {
             File photoFile = null;
@@ -90,9 +93,14 @@ public class CameraModule extends ReactContextBaseJavaModule {
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(photoFile));
                 mActivity.startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                galleryAddPic();
+                return photoFile;
             }
         }
+        return null;
     }
+
+
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -111,12 +119,12 @@ public class CameraModule extends ReactContextBaseJavaModule {
         return image;
     }
 
-//    private void galleryAddPic() {
-//        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-//        File f = new File(mCurrentPhotoPath);
-//        Uri contentUri = Uri.fromFile(f);
-//        mediaScanIntent.setData(contentUri);
-//        this.sendBroadcast(mediaScanIntent);
-//    }
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        reactContext.sendBroadcast(mediaScanIntent);
+    }
 
 }

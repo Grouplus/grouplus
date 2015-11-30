@@ -21,6 +21,8 @@
   TouchableOpacity,
   AlertIOS,
   Platform,
+  NativeModules,
+  Image
 } = React;
 
 var AddButton = require('./helpers/AddButton');
@@ -29,6 +31,7 @@ var Utils = require('./helpers/Utils');
 var {
   CameraModule
 } = require('NativeModules');
+var Camera = require('react-native-camera');
 
 var options = {
   title: 'Upload Photo', // specify null or empty string to remove the title
@@ -73,6 +76,7 @@ var styles = StyleSheet.create({
   }, 
 });
 
+
 class Photos extends ParseComponent{
   constructor(props){
     super(props);
@@ -81,11 +85,13 @@ class Photos extends ParseComponent{
       isEditing: false
     }
   }
+
   observe(props, state) {
     return {
       imageList: (new Parse.Query('GroupPhotos')).equalTo('groupId', this.props.group.objectId),
     }
   }
+
   onPressRow(image) {
     this.props.navigator.push({
       id: 'Photo',
@@ -140,6 +146,67 @@ class Photos extends ParseComponent{
       }
     });
   }
+
+     imageAndroid() {
+  //   var that = this;
+  //   UIImagePickerManager.showImagePicker(options, (didCancel, response) => {
+  //     if (didCancel) {
+  //       //console.log('User cancelled image picker');
+  //     } else if (response.customButton) {
+  //       //console.log('User tapped custom button: ', response.customButton);
+  //     }
+  //     else {
+  //   var response=CameraModule.dispatchTakePictureIntent();
+  //   const source = {uri: 'data:image/jpeg;base64,' + response, isStatic: true};
+  //   var file = new Parse.File('mockphoto7.jpg', {base64: response}, 'image/jpeg');
+  //   var creator = ParseReact.Mutation.Create('GroupPhotos', {
+  //         groupId: this.props.group.objectId,
+  //         uploadedBy: Parse.User.current().id,
+  //         description: "test picture upload",
+  //       });    
+
+  //   creator.dispatch().then(function(object){
+  //         var photoItem = Parse.Object.extend("GroupPhotos");
+  //         var query = new Parse.Query(photoItem);
+  //         query.get(object.objectId, {
+  //           success:function(photoItem){
+  //             photoItem.set('imgFile',file);
+
+  //             photoItem.save(null, {
+  //              success: function(item) {
+  //                that.refreshQueries();
+  //              },
+  //              error: function(item, error) {
+  //                 // Execute any logic that should take place if the save fails.
+  //             // error is a Parse.Error with an error code and message.
+  //             alert('Pictures failed');     
+  //           }
+  //         })
+  //           }
+  //         });          
+  //       });
+  //   this.setState({
+  //         avatarSource: source
+  //       });
+  //   }
+  // });
+   }
+
+   pickFromCamera() {
+    UIImagePickerManager.launchCamera({}, (cancelled, response) => {
+      if (!cancelled) {
+        this.setState({ imageURI: response.uri });
+      }
+    });
+  }
+
+  pickFromImageLibrary() {
+    UIImagePickerManager.launchImageLibrary({}, (cancelled, response) => {
+      if (!cancelled) {
+        this.setState({ imageURI: response.uri });
+      }
+    });
+  }
   //<Image source={this.state.avatarSource} style={styles.uploadAvatar} />
   OnPressChooseDelete(){
     this.setState({isEditing: !this.state.isEditing });
@@ -175,6 +242,8 @@ class Photos extends ParseComponent{
       onPressRight={()=>this.OnPressChooseDelete()}/>
     );
   }
+
+
   renderRow(image){
     if(image.imgFile){
     if(!this.state.isEditing){
@@ -205,9 +274,8 @@ else{
         <Image style={styles.photoListItem} source={{uri: 'http://files.parsetfss.com/00e842b6-2777-4203-a28f-7407fe7b3df1/tfss-13223ae0-6aeb-44d3-bae2-fad16249e757-loading.jpg'}}/>
         </TouchableHighlight>
         );
+  }
 }
-}
-
 
   render(){
     return (
@@ -216,7 +284,22 @@ else{
       <ListView contentContainerStyle={styles.list}
       dataSource={this.ds.cloneWithRows(this.data.imageList)}
       renderRow={this.renderRow.bind(this)}  />
-      <AddButton onPress={Platform.OS ==="ios"? this.imageOptions.bind(this) : () => CameraModule.dispatchTakePictureIntent()}/>
+        <Text
+          onPress={this.pickFromCamera.bind(this)}
+          style={styles.imagePickerButton}>
+          Touch me to take a photo!
+        </Text>
+        <Text
+          onPress={this.pickFromImageLibrary.bind(this)}
+          style={styles.imagePickerButton}>
+          Touch me to pick from gallery!
+        </Text>
+
+        <Image
+          style={styles.image}
+          source={{ uri: this.state.imageURI }}
+        />
+      <AddButton onPress={Platform.OS ==="ios"? this.imageOptions.bind(this) : this.imageAndroid.bind(this)}/>
       </View>
       );
   }
