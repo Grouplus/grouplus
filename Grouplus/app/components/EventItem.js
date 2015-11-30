@@ -60,7 +60,7 @@ class EventItem extends React.Component{
         <View style={styles.info}>
           <Text style={styles.title}> {event.name} </Text>
           <Text style={styles.time}> {moment(event.dueDate).calendar()} </Text>
-          <Text style={styles.loc}> {event.location} </Text>
+          <Text style={styles.loc}> Location: {event.location} </Text>
         </View>
       </View>
     );
