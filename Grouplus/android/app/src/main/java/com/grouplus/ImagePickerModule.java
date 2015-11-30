@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.widget.Toast;
 
 import com.facebook.react.bridge.Arguments;
@@ -22,8 +23,12 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +41,7 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
 
     private Uri mCameraCaptureURI;
     private Callback mCallback;
+    private String fileString;
 
     public ImagePickerModule(ReactApplicationContext reactContext, MainActivity mainActivity) {
         super(reactContext);
@@ -53,7 +59,7 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
 
     // NOTE: Currently not reentrant / doesn't support concurrent requests
     @ReactMethod
-    public void launchCamera(ReadableMap options, Callback callback) {
+    public void launchCamera(ReadableMap options, Callback callback) throws FileNotFoundException {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (cameraIntent.resolveActivity(mMainActivity.getPackageManager()) != null) {
             File imageFile = null;
@@ -69,8 +75,27 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
             mCameraCaptureURI = Uri.fromFile(imageFile);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCameraCaptureURI);
             mCallback = callback;
+            fileString = generateString(imageFile);
             mMainActivity.startActivityForResult(cameraIntent, REQUEST_LAUNCH_CAMERA);
         }
+    }
+
+    private String generateString(File imageFile) throws FileNotFoundException {
+        InputStream inputStream = new FileInputStream(imageFile);//You can get an inputStream using any IO API
+        byte[] bytes;
+        byte[] buffer = new byte[8192];
+        int bytesRead;
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        try {
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                output.write(buffer, 0, bytesRead);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        bytes = output.toByteArray();
+        String encodedString = Base64.encodeToString(bytes, Base64.DEFAULT);
+        return encodedString;
     }
 
     // NOTE: Currently not reentrant / doesn't support concurrent requests
@@ -87,9 +112,9 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_LAUNCH_CAMERA || requestCode == REQUEST_LAUNCH_IMAGE_LIBRARY) {
             if (resultCode == Activity.RESULT_OK) {
-                Uri uri = requestCode == REQUEST_LAUNCH_CAMERA ? mCameraCaptureURI : data.getData();
+                String s = requestCode == REQUEST_LAUNCH_CAMERA ? fileString : "";
                 WritableMap response = Arguments.createMap();
-                response.putString("uri", uri.toString());
+                response.putString("stringPhoto", s);
                 mCallback.invoke(false, response);
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 mCallback.invoke(true, Arguments.createMap());

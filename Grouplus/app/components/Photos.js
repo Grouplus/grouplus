@@ -146,66 +146,14 @@ class Photos extends ParseComponent{
     });
   }
 
-     imageAndroid() {
-  //   var that = this;
-  //   UIImagePickerManager.showImagePicker(options, (didCancel, response) => {
-  //     if (didCancel) {
-  //       //console.log('User cancelled image picker');
-  //     } else if (response.customButton) {
-  //       //console.log('User tapped custom button: ', response.customButton);
-  //     }
-  //     else {
-  //   var response=CameraModule.dispatchTakePictureIntent();
-  //   const source = {uri: 'data:image/jpeg;base64,' + response, isStatic: true};
-  //   var file = new Parse.File('mockphoto7.jpg', {base64: response}, 'image/jpeg');
-  //   var creator = ParseReact.Mutation.Create('GroupPhotos', {
-  //         groupId: this.props.group.objectId,
-  //         uploadedBy: Parse.User.current().id,
-  //         description: "test picture upload",
-  //       });    
-
-  //   creator.dispatch().then(function(object){
-  //         var photoItem = Parse.Object.extend("GroupPhotos");
-  //         var query = new Parse.Query(photoItem);
-  //         query.get(object.objectId, {
-  //           success:function(photoItem){
-  //             photoItem.set('imgFile',file);
-
-  //             photoItem.save(null, {
-  //              success: function(item) {
-  //                that.refreshQueries();
-  //              },
-  //              error: function(item, error) {
-  //                 // Execute any logic that should take place if the save fails.
-  //             // error is a Parse.Error with an error code and message.
-  //             alert('Pictures failed');     
-  //           }
-  //         })
-  //           }
-  //         });          
-  //       });
-  //   this.setState({
-  //         avatarSource: source
-  //       });
-  //   }
-  // });
-   }
-
-   pickFromCamera() {
+  imageAndroid() {
     UIImagePickerManager.launchCamera({}, (cancelled, response) => {
       if (!cancelled) {
-        this.setState({ imageURI: response.uri });
+        //this.setState({ photoString: response.string });
+        console.log(response.stringPhoto);
       }
     });
-  }
-
-  pickFromImageLibrary() {
-    UIImagePickerManager.launchImageLibrary({}, (cancelled, response) => {
-      if (!cancelled) {
-        this.setState({ imageURI: response.uri });
-      }
-    });
-  }
+   }
   //<Image source={this.state.avatarSource} style={styles.uploadAvatar} />
   OnPressChooseDelete(){
     this.setState({isEditing: !this.state.isEditing });
@@ -283,16 +231,6 @@ else{
       <ListView contentContainerStyle={styles.list}
       dataSource={this.ds.cloneWithRows(this.data.imageList)}
       renderRow={this.renderRow.bind(this)}  />
-        <Text
-          onPress={this.pickFromCamera.bind(this)}
-          style={styles.imagePickerButton}>
-          Touch me to take a photo!
-        </Text>
-        <Text
-          onPress={this.pickFromImageLibrary.bind(this)}
-          style={styles.imagePickerButton}>
-          Touch me to pick from gallery!
-        </Text>
 
         <Image
           style={styles.image}
