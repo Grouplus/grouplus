@@ -31,6 +31,7 @@ var TodoItem = require('./TodoItem');
 var TodoAdd = require('./TodoAdd');
 var NavBar = require('./helpers/NavBar');
 var Utils = require('./helpers/Utils'); 
+var storageHelper = require('./helpers/AsyncStorageWrapper'); 
 
 var basicStyles = require('./helpers/Styles');
 var styles = StyleSheet.create({
@@ -55,11 +56,16 @@ class TodoList extends ParseComponent{
       todoList:"",
       todoDoneList:""
     };
+    var cached = storageHelper.get("todos"+this.props.group.objectId); 
+     if(cached !== null && cached.length >0){
+          this.setState({"todoList": JSON.parse(value).ongoingTodo, "todoDoneList": JSON.parse(value).doneTodo});   
+      }
+/*
     AsyncStorage.getItem("todos"+this.props.group.objectId).then((value) => {
           if(value !== null && value.length >0){
               this.setState({"todoList": JSON.parse(value).ongoingTodo, "todoDoneList": JSON.parse(value).doneTodo});   
           }
-    });
+    });*/
   }
 
   observe(props, state) {
@@ -76,7 +82,8 @@ class TodoList extends ParseComponent{
   componentDidUpdate(){
      if(this.data.todos.length>0 && this.props.group.objectId !== null){
         var todosJSON = {doneTodo: this.data.todosDone, ongoingTodo: this.data.todos };
-         AsyncStorage.setItem("todos"+this.props.group.objectId, JSON.stringify(todosJSON)); 
+        // AsyncStorage.setItem("todos"+this.props.group.objectId, JSON.stringify(todosJSON)); 
+        storageHelper.save("todos"+this.props.group.objectId, todosJSON);
       }
   }
   onPressNewTodo() {
@@ -112,7 +119,8 @@ class TodoList extends ParseComponent{
         ParseReact.Mutation.Destroy(target).dispatch();
         // force to delete from asynchorous storage as well
         var todosJSON = {doneTodo: that.data.todosDone, ongoingTodo: that.data.todos };
-        AsyncStorage.setItem("todos"+that.props.group.objectId, JSON.stringify(todosJSON)); 
+        storageHelper.save("todos"+this.props.group.objectId, todosJSON);
+       // AsyncStorage.setItem("todos"+that.props.group.objectId, JSON.stringify(todosJSON)); 
         that.setState({"todoList": that.data.todos});  
       }
     }; 
