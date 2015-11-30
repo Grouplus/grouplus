@@ -106,7 +106,7 @@ class EventAdd extends React.Component{
       }
 
       creator.dispatch();
-      this.props.refresh();
+  //    this.props.refresh();
       if(this.props.exportPeople.indexOf(Parse.User.current().id) >=0){
         Utils.export(value);
       } 

@@ -72,7 +72,7 @@ var styles = StyleSheet.create({
     marginVertical: 10,
   },
   groupName: {
-    fontSize: 24,
+    fontSize: 18,
   },
 });
 

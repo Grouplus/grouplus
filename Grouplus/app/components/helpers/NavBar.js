@@ -22,13 +22,14 @@ var styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   navBar: {
-    height: Platform.OS === 'ios' ? 64 : 50,
+    height: Platform.OS === 'ios' ? 70 : 50,
     backgroundColor: '#3399FF',
     justifyContent: 'flex-start',
   },
   navTitle: {
     color: 'white', 
     fontSize: 22,
+    fontWeight: 'bold',
     alignSelf: 'center',
   },
   navTitleWrapper: {

@@ -26,9 +26,10 @@ var styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   title: {
-    fontSize: 22,
+    fontSize: 18,
     flex: 7,
     textAlign: 'left',
+    marginTop: 5,
   },
   info: {
     flex: 15,

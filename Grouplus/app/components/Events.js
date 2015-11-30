@@ -47,6 +47,11 @@ container: {
 name: {
   fontSize: 18,
 },
+  switchFit:{
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    margin: 10,
+  }
 });
 
 class Events extends ParseComponent{
@@ -180,9 +185,16 @@ else{
     return (
       <View style={basicStyles.flex1}>
         {this.renderNav()}
+         <View style={styles.switchFit}>
+        <Text>
+        View Past Events:   
+        </Text>
         <Switch
           onValueChange={(value) => {this.setState({doneSwitchIsOn: value})}}
-          value={this.state.doneSwitchIsOn} />    
+          value={this.state.doneSwitchIsOn} />  
+          </View>
+        <Separator/>
+
         <ListView 
           dataSource={this.ds.cloneWithRows(events)}
           renderRow={this.renderRow.bind(this)} />

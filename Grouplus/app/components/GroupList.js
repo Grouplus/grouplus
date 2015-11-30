@@ -44,10 +44,10 @@ var styles = StyleSheet.create({
     height: 70,
   },
   groupDetail: {
-    marginVertical: 10,
+    marginVertical: 22,
   },
   groupName: {
-    fontSize: 24,
+    fontSize: 20,
   },
 });
 var colors = ['#FF9966', '#CCCCFF', '#99CCFF', '#FFCCFF', '#66FFCC']

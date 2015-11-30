@@ -21,7 +21,7 @@ var styles = StyleSheet.create({
     margin: 10,
   },
   text: {
-    fontSize: 30,
+    fontSize: 25,
     opacity: 30,
     color: 'white',
   },

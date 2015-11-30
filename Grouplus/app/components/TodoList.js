@@ -40,6 +40,11 @@ var styles = StyleSheet.create({
     width: 22,
     color: 'white',
   },
+  switchFit:{
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    margin: 10,
+  }
 });
 
 var { Icon } = require('react-native-icons');
@@ -241,7 +246,13 @@ class TodoList extends ParseComponent{
     return (
       <View style={basicStyles.flex1}>
         {this.renderNav()}
+        <View style={styles.switchFit}>
+        <Text>
+        View Finished Todos:   
+        </Text>
         {this.renderSwitch()}
+        </View>
+        {this.renderSeparator()}
         <ListView
           dataSource={this.ds.cloneWithRows(todoData)}
           renderRow={this.renderRow.bind(this)} 
