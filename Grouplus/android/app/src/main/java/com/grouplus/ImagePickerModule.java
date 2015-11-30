@@ -42,13 +42,14 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
     private Uri mCameraCaptureURI;
     private Callback mCallback;
     private String fileString;
+    private File imageFile;
 
     public ImagePickerModule(ReactApplicationContext reactContext, MainActivity mainActivity) {
         super(reactContext);
 
         mReactContext = reactContext;
         mMainActivity = mainActivity;
-
+       // imageFile = new File();
         mMainActivity.addActivityResultListener(this);
     }
 
@@ -62,9 +63,8 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
     public void launchCamera(ReadableMap options, Callback callback) throws FileNotFoundException {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (cameraIntent.resolveActivity(mMainActivity.getPackageManager()) != null) {
-            File imageFile = null;
             try {
-                imageFile = File.createTempFile("exponent_capture_", ".jpg",
+                 imageFile = File.createTempFile("exponent_capture_", ".jpg",
                         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
             } catch (IOException e) {
                 Toast.makeText(mMainActivity.getApplicationContext(),
@@ -75,15 +75,19 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
             mCameraCaptureURI = Uri.fromFile(imageFile);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCameraCaptureURI);
             mCallback = callback;
-            fileString = generateString(imageFile);
             mMainActivity.startActivityForResult(cameraIntent, REQUEST_LAUNCH_CAMERA);
         }
     }
 
-    private String generateString(File imageFile) throws FileNotFoundException {
-        InputStream inputStream = new FileInputStream(imageFile);//You can get an inputStream using any IO API
+    private String generateString(File file){
+        InputStream inputStream = null;//You can get an inputStream using any IO API
+        try {
+            inputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         byte[] bytes;
-        byte[] buffer = new byte[8192];
+        byte[] buffer = new byte[100000];
         int bytesRead;
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         try {
@@ -112,9 +116,11 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_LAUNCH_CAMERA || requestCode == REQUEST_LAUNCH_IMAGE_LIBRARY) {
             if (resultCode == Activity.RESULT_OK) {
-                String s = requestCode == REQUEST_LAUNCH_CAMERA ? fileString : "";
+                Uri uri = requestCode == REQUEST_LAUNCH_CAMERA ? mCameraCaptureURI : data.getData();
+                String result=generateString(imageFile);
                 WritableMap response = Arguments.createMap();
-                response.putString("stringPhoto", s);
+                response.putString("uri", uri.toString());
+                response.putString("data", result);
                 mCallback.invoke(false, response);
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 mCallback.invoke(true, Arguments.createMap());

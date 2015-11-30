@@ -147,10 +147,36 @@ class Photos extends ParseComponent{
   }
 
   imageAndroid() {
+    var that=this;
     UIImagePickerManager.launchCamera({}, (cancelled, response) => {
       if (!cancelled) {
-        //this.setState({ photoString: response.string });
-        console.log(response.stringPhoto);
+      var file = new Parse.File('mockphoto7.jpg', {base64: response.data}, 'image/jpeg');
+      console.log("here");
+        var creator = ParseReact.Mutation.Create('GroupPhotos', {
+          groupId: this.props.group.objectId,
+          uploadedBy: Parse.User.current().id,
+          description: "Daisy",
+        });
+
+        creator.dispatch().then(function(object){
+          var photoItem = Parse.Object.extend("GroupPhotos");
+          var query = new Parse.Query(photoItem);
+          query.get(object.objectId, {
+            success:function(photoItem){
+              photoItem.set('imgFile',file);
+
+              photoItem.save(null, {
+               success: function(item) {
+                 that.refreshQueries();
+               },
+               error: function(item, error) {
+                  // Execute any logic that should take place if the save fails.
+              // error is a Parse.Error with an error code and message.
+            }
+          })
+            }
+          });          
+        });
       }
     });
    }
