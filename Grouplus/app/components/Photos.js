@@ -31,7 +31,6 @@ var Utils = require('./helpers/Utils');
 var {
   CameraModule
 } = require('NativeModules');
-var Camera = require('react-native-camera');
 
 var options = {
   title: 'Upload Photo', // specify null or empty string to remove the title
