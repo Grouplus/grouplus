@@ -102,6 +102,7 @@ class GroupList extends ParseComponent {
     });
     PushNotificationIOS.addEventListener('notification', function(notification){
       alert(notification.getMessage());
+      that.refreshQueries('groups');
     });
   }
 
