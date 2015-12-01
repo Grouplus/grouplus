@@ -5,14 +5,20 @@ package com.grouplus;
  */
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.facebook.react.bridge.Arguments;
@@ -27,8 +33,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +53,9 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
     private Callback mCallback;
     private String fileString;
     private File imageFile;
+    private File shareImage;
+    private Uri shareUri;
+    private Bitmap myBitmap;
 
     public ImagePickerModule(ReactApplicationContext reactContext, MainActivity mainActivity) {
         super(reactContext);
@@ -79,6 +92,7 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
         }
     }
 
+
     private String generateString(File file){
         InputStream inputStream = null;//You can get an inputStream using any IO API
         try {
@@ -110,6 +124,30 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
         libraryIntent.setAction(Intent.ACTION_GET_CONTENT);
         mCallback = callback;
         mMainActivity.startActivityForResult(libraryIntent, REQUEST_LAUNCH_IMAGE_LIBRARY);
+    }
+
+    @ReactMethod
+    public void shareApp(String imgurl){
+        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+        sendIntent.setType("application/jpeg");  //list will be smaller
+
+        try {
+            URL url = new URL(imgurl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            myBitmap = BitmapFactory.decodeStream(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(mReactContext.getContentResolver(), myBitmap, "Title", null);
+        System.out.println("emma" + Uri.parse(path));
+        sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(path));
+        mMainActivity.startActivity(Intent.createChooser(sendIntent, "Send preview via"));
     }
 
     @Override

@@ -4,6 +4,7 @@
  */
 
 var React = require('react-native');
+var Utils = require('./helpers/Utils')
 var {
   Text,
   View,
@@ -17,6 +18,8 @@ if (Platform.OS === 'ios') {
   var ActivityView = require('react-native-activity-view');
 }
 
+ var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
+
 
 var styles = StyleSheet.create({
    imageContainer: {
@@ -28,17 +31,15 @@ var styles = StyleSheet.create({
 class PhotoItem extends React.Component{
 _pressHandler(imgUrl){
   if (Platform.OS === 'android') {
-    return;
+    UIImagePickerManager.shareApp(imgUrl.toString());
   }
+  else{
   ActivityView.show({
     text: "Text you want to share",
-    //url: "URL you want to share",
     imageUrl: imgUrl,
-    //image: "Name of the image in the app bundle",
-    //exclude: ['postToFlickr'],
-    //anchor: React.findNodeHandle(this.refs.share), // Where you want the share popup to point to on iPad
   });
   }
+}
 
   render(){
     return (
