@@ -100,6 +100,9 @@ class GroupList extends ParseComponent {
         'user': that.props.user.id,
       })
     });
+    PushNotificationIOS.addEventListener('notification', function(notification){
+      alert(notification.getMessage());
+    });
   }
 
   componentDidUpdate(){
