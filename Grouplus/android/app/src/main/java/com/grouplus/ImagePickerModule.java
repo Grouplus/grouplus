@@ -141,11 +141,9 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(mReactContext.getContentResolver(), myBitmap, "Title", null);
-        System.out.println("emma" + Uri.parse(path));
         sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(path));
         mMainActivity.startActivity(Intent.createChooser(sendIntent, "Send preview via"));
     }
