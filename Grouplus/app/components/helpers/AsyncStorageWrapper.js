@@ -22,7 +22,7 @@ var StorageHelper = {
 	}, 	
 
 	update: function(key, value) {
-		return storageHelper.get(key).then((item) => {
+		return StorageHelper.get(key).then((item) => {
 			value = typeof value === 'string' ? value : Object.assign({}, item, value);
 			return AsyncStorage.setItem(key, JSON.stringify(value));
 		});
