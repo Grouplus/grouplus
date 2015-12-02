@@ -144,7 +144,7 @@ class Files extends ParseComponent{
         leftIcon={backIcon}
         onPressLeft={onBackPressed}
         title={title}
-        onPressTitle={()=>this.refreshQueries}
+        onPressTitle={()=>this.refreshQueries()}
         rightIcon={right}
         onPressRight={()=>this.OnPressChooseShare()}/>
     );

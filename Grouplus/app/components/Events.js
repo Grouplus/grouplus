@@ -169,7 +169,7 @@ else{
         leftIcon={backIcon}
         onPressLeft={onBackPressed}
         title={title}
-        onPressTitle={()=>this.refreshQueries}/>
+        onPressTitle={()=>this.refreshQueries()}/>
       );
   }
 
