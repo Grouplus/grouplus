@@ -103,6 +103,9 @@ public class MainActivity extends FragmentActivity implements DefaultHardwareBac
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // handle onActivityResult
+        mFacebookLoginPackage.handleActivityResult(requestCode, resultCode, data);
         for (ActivityResultListener listener : mListeners) {
             listener.onActivityResult(requestCode, resultCode, data);
         }

@@ -11,7 +11,6 @@ var {
   StyleSheet,
   Text,
   TouchableHighlight,
-  AsyncStorage,
   TouchableOpacity,
   Navigator,
   PushNotificationIOS,
@@ -22,6 +21,7 @@ var { Icon } = require('react-native-icons');
 
 var NavBar = require('./helpers/NavBar');
 var Separator = require('./helpers/Separator');
+var StorageHelper = require('./helpers/AsyncStorageWrapper');
 var AddButton = require('./helpers/AddButton');
 var GroupIcon = require('./GroupIcon');
 var GroupPanel = require('./GroupPanel');
@@ -58,11 +58,8 @@ class GroupList extends ParseComponent {
     super(props);
     this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
     this.state = {groups: ""};
-    AsyncStorage.getItem("groups"+this.props.user.id).then((value) => {
-          if(value !== null && value.length >0){
-              this.setState({"groups": JSON.parse(value)});  
-              console.log(this.state.groups); 
-          }
+    StorageHelper.get("groups"+this.props.user.id).then((value) =>{
+          this.setState({"groups": value});  
     });
   }
   observe(props, state) {
@@ -108,7 +105,8 @@ class GroupList extends ParseComponent {
 
   componentDidUpdate(){
      if(this.data.groups.length>0 && this.props.user.id !== null){
-         AsyncStorage.setItem("groups"+this.props.user.id, JSON.stringify(this.data.groups)); 
+         //AsyncStorage.setItem("groups"+this.props.user.id, JSON.stringify(this.data.groups)); 
+        StorageHelper.save("groups"+this.props.user.id, this.data.groups);
       }
   }
   onPressRow(group) {

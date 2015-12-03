@@ -6,6 +6,7 @@
  var ParseComponent = ParseReact.Component(React);
  var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
  var Parse = require('parse/react-native');
+ var Utils = require('./helpers/Utils'); 
  Parse.initialize("***REMOVED***", "***REMOVED***");
 
  var {
@@ -90,22 +91,33 @@ class Files extends ParseComponent{
     }
   }
   onPressRow(file) {
+    if (Platform.OS === 'android'){
+       Utils.alertToast("Android support is coming soon");
+      }
+      else{
     if(this.state.isEditing){
-      this.onPressShare(file);
+      //this.onPressShare(file);
     }else{
       this.props.navigator.push({
       id: 'File',
       uri: file.file.url(),
     });
     }
+   }
   }
+
+
   OnPressChooseShare(){
     this.setState({isEditing: !this.state.isEditing });
   }
+
+
   onPressShare(file){
   if (Platform.OS === 'android') {
-    return;
+        //UIImagePickerManager.shareApp(file.file.url());
+        Utils.alertToast("Android support is coming soon");
   }
+  else{
   ActivityView.show({
     text: "File Share",
     url: file.file.url(),
@@ -115,6 +127,7 @@ class Files extends ParseComponent{
     //anchor: React.findNodeHandle(this.refs.share), // Where you want the share popup to point to on iPad
   });
   }
+}
   renderNav(){
     var backIcon, onBackPressed;
     var title = this.props.group === null ? 'Grouplus' : this.props.group.name;
@@ -131,12 +144,16 @@ class Files extends ParseComponent{
         leftIcon={backIcon}
         onPressLeft={onBackPressed}
         title={title}
-        onPressTitle={()=>this.refreshQueries}
+        onPressTitle={()=>this.refreshQueries()}
         rightIcon={right}
         onPressRight={()=>this.OnPressChooseShare()}/>
     );
   }
   openPicker() {
+    if (Platform.OS === 'android'){
+       Utils.alertToast("Android support is coming soon");
+      }
+      else{
     var that = this;
     DocManager.pickDoc((filename, data) => {
       if (data) {
@@ -172,6 +189,8 @@ class Files extends ParseComponent{
       } 
     });
   }
+}
+
   renderSeparator() {
     return (
       <Separator/>
