@@ -7,7 +7,7 @@ var React = require('react-native');
 var ParseReact = require('parse-react/react-native');
 var ParseComponent = ParseReact.Component(React);
 var Parse = require('parse/react-native');
-Parse.initialize("***REMOVED***", "***REMOVED***");
+Parse.initialize("Key1", "Key2");
 
 var {
   View,

@@ -6,7 +6,7 @@
  var ParseComponent = ParseReact.Component(React);
  var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
  var Parse = require('parse/react-native');
- Parse.initialize("***REMOVED***", "***REMOVED***");
+ Parse.initialize("Key1", "Key2");
  var mockdata = require('../utils/MockData.js');
 
  var {

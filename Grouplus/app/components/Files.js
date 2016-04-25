@@ -7,7 +7,7 @@
  var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
  var Parse = require('parse/react-native');
  var Utils = require('./helpers/Utils'); 
- Parse.initialize("***REMOVED***", "***REMOVED***");
+ Parse.initialize("Key1", "Key2");
 
  var {
   TouchableHighlight,

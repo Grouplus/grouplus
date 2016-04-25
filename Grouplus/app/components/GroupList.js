@@ -34,7 +34,7 @@ var Utils = require('./helpers/Utils');
 var Parse = require('parse/react-native');
 var ParseReact = require('parse-react/react-native');
 var ParseComponent = ParseReact.Component(React);
-Parse.initialize("***REMOVED***", "***REMOVED***");
+Parse.initialize("Key1", "Key2");
 
 var basicStyles = require('./helpers/Styles');
 var styles = StyleSheet.create({
@@ -81,8 +81,8 @@ class GroupList extends ParseComponent {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'X-Parse-Application-Id': '***REMOVED***',
-          'X-Parse-REST-API-Key': '***REMOVED***',
+          'X-Parse-Application-Id': 'X-Parse-Application-Id',
+          'X-Parse-REST-API-Key': 'X-Parse-REST-API-Key',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)

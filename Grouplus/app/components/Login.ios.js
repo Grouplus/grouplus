@@ -24,7 +24,7 @@ var {
 } = FBSDKLogin;
 
 // initializing Parse
-Parse.initialize("***REMOVED***", "***REMOVED***");
+Parse.initialize("Key1", "Key2");
 
 var styles = StyleSheet.create({
   loginImage: {
